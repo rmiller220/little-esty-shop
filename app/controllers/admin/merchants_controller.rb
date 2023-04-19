@@ -23,18 +23,28 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def create
-    Merchant.create(admin_merchant_params)
-    redirect_to admin_merchants_path 
+    @new_merchant = Merchant.new(admin_merchant_params)
+    if @new_merchant.save
+      redirect_to admin_merchants_path 
+    else
+      flash[:alert] = "Please enter name"
+      redirect_to new_admin_merchant_path
+    end
   end
 
   def update
     @merchant = Merchant.find(params[:id])
-    @merchant.update(admin_merchant_params)
-    if !params[:merchant][:status].nil?
-      redirect_to admin_merchants_path
+
+    if @merchant.update(admin_merchant_params)
+      if !params[:merchant][:status].nil?
+        redirect_to admin_merchants_path
+      else
+        flash[:alert] = "This Merchant's information has been updated"
+        redirect_to admin_merchant_path(@merchant)
+      end
     else
-      flash[:alert] = "This Merchant's information has been updated"
-      redirect_to admin_merchant_path(@merchant)
+      flash[:alert] = "Please fill out all fields"
+      redirect_to edit_admin_merchant_path(@merchant)
     end
   end
 

@@ -214,5 +214,14 @@ RSpec.describe "Index page", type: :feature do
 
       expect(current_path).to eq(merchant_items_path(@merchant_1))
     end
+
+    it "new item sad path" do
+      visit new_merchant_item_path(@merchant_2)
+
+      click_button("Create Item")
+
+      expect(current_path).to eq(new_merchant_item_path(@merchant_2))
+      expect(page).to have_content("Please fill out information fields properly")
+    end
   end
 end

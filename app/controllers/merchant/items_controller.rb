@@ -22,10 +22,14 @@ class Merchant::ItemsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    @item = @merchant.items.create(item_params)
-    @item.status = 0
-    @item.save
-    redirect_to merchant_items_path(@merchant)
+    @item = @merchant.items.new(item_params)
+    if @item.save
+      @item.status = 0
+      redirect_to merchant_items_path(@merchant)
+    else
+      flash[:alert] = "Please fill out information fields properly"
+      redirect_to new_merchant_item_path(@merchant)
+    end
   end
 
   def edit
@@ -34,15 +38,17 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def update
-    if !params[:status].nil?
-      @item = Item.find(params[:id])
-      @item.update(item_params)
-      @item.save
-      redirect_to merchant_items_path(@item.merchant)
+    @item = Item.find(params[:id])
+
+    if @item.update(item_params)
+      if !params[:status].nil?
+        redirect_to merchant_items_path(@item.merchant)
+      else
+        redirect_to merchant_item_path(@item.merchant, @item)
+      end
     else
-      @item = Item.find(params[:id])
-      @item.update(item_params)
-      redirect_to merchant_item_path(@item.merchant, @item)
+      flash[:alert] = "Please fill out information fields properly"
+      redirect_to edit_merchant_item_path(@item.merchant, @item)
     end
   end
 
