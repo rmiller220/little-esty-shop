@@ -34,5 +34,14 @@ RSpec.describe "admin/merchants/new" do
         expect(page).to have_content("Bobbo's crab joint")
       end
     end
+
+    it "sad path for merchant new" do
+      visit new_admin_merchant_path
+
+      click_button("Create Merchant")
+
+      expect(page).to have_content("Please enter name")
+      expect(current_path).to eq(new_admin_merchant_path)
+    end
   end
 end

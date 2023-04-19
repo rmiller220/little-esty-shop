@@ -25,5 +25,14 @@ RSpec.describe "admin/merchant edit page", type: :feature do
       expect(page).to have_content("This Merchant's information has been updated")
       expect(page).to have_content("This is the name now")
     end
+
+    it 'sad path for edit' do
+      visit edit_admin_merchant_path(@merchant_3)
+      fill_in "Name", with: ""
+      click_button("Update Merchant")
+
+      expect(page).to have_content("Please fill out all fields")
+      expect(current_path).to eq(edit_admin_merchant_path(@merchant_3))
+    end
   end
 end

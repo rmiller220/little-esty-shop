@@ -22,7 +22,6 @@ RSpec.describe "Item show page", type: :feature do
       @item_8 = @merchant_3.items.create!(name: "Item_8", description: "Description_8", unit_price: 800)
       @item_9 = @merchant_3.items.create!(name: "Item_9", description: "Description_9", unit_price: 900)
       @item_10 = @merchant_3.items.create!(name: "Item_10", description: "Description_10", unit_price: 1000)
-      @item_11 = FactoryBot.create(:item, merchant: @merchant_1)
     end
     
     it "visit item show page, see a link to update that item" do
@@ -84,6 +83,18 @@ RSpec.describe "Item show page", type: :feature do
       expect(page).to have_content("Cookies")
       expect(page).to have_content("Description: Yummy")
       expect(page).to have_content("Unit price: 750")
+    end
+
+    it "sad path for item edit" do
+      visit edit_merchant_item_path(@merchant_1, @item_1)
+
+      fill_in "Name", with: ""      
+      fill_in "Unit Price", with: ""      
+      fill_in "Description", with: "" 
+
+      click_button("Update Item")
+      expect(page).to have_content("Please fill out information fields properly")
+      expect(current_path).to eq(edit_merchant_item_path(@merchant_1, @item_1))
     end
   end
 end

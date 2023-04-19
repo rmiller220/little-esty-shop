@@ -3,6 +3,7 @@ class Merchant::InvoicesController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
     @invoices = @merchant.invoices
     @app_logo = PhotoBuilder.app_photo_info
+    @title_string = @merchant.name
   end
 
   def show
