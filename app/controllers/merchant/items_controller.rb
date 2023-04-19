@@ -6,6 +6,7 @@ class Merchant::ItemsController < ApplicationController
     @disabled_items = @merchant.items.disabled_items
     @top_five = @merchant.items.top_five_items
     @app_logo = PhotoBuilder.app_photo_info
+    @title_string = @merchant.name
   end
 
   def show

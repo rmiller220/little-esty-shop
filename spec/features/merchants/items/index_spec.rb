@@ -22,13 +22,12 @@ RSpec.describe "Index page", type: :feature do
       @item_8 = @merchant_3.items.create!(name: "Item_8", description: "Description_8", unit_price: 800)
       @item_9 = @merchant_3.items.create!(name: "Item_9", description: "Description_9", unit_price: 900)
       @item_10 = @merchant_3.items.create!(name: "Item_10", description: "Description_10", unit_price: 1000)
-      @item_11 = FactoryBot.create(:item, merchant: @merchant_1)
     end
 
     it "displays only the items for the given merchant" do
       visit merchant_items_path(@merchant_1)
 
-      expect(page).to have_content("Merchant_1's items")
+      expect(page).to have_content("Merchant_1")
       expect(page).to have_content("Item_1")
       expect(page).to have_content("Item_2")
       expect(page).to have_content("Item_3")
