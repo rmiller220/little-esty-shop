@@ -50,5 +50,9 @@ namespace :csv_load do
     Rake::Task["csv_load:invoices"].invoke
     Rake::Task["csv_load:transactions"].invoke
     Rake::Task["csv_load:invoice_items"].invoke
+
+    ActiveRecord::Base.connection.tables.each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t)
+    end
   end
 end
