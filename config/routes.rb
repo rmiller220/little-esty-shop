@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   
   resources :merchants do
-    resources :bulk_discounts, only: [:index]
+    resources :bulk_discounts, only: [:index, :show]
     resources :items, controller: 'merchant/items'
     resources :invoices, controller: 'merchant/invoices'
     get 'dashboard', to:'merchant/dashboard#show', on: :member
