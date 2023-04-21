@@ -136,5 +136,27 @@ RSpec.describe 'Merchant Dashboard Show Page' do
       end
     end
   end
+
+  describe "Bulk Discounts" do
+    before do
+      @bulk_discount1 = @merchant_1.bulk_discounts.create!(name: "10% Discount off 10 items", percentage_discounts: 0.10, quantity_threshold: 10)
+      @bulk_discount2 = @merchant_1.bulk_discounts.create!(name: "20% Discount off 15 items", percentage_discounts: 0.20, quantity_threshold: 15)
+      @bulk_discount3 = @merchant_2.bulk_discounts.create!(name: "30% Discount off 20 items", percentage_discounts: 0.30, quantity_threshold: 20)
+      @bulk_discount4 = @merchant_2.bulk_discounts.create!(name: "15% Discount off 10 items", percentage_discounts: 0.15, quantity_threshold: 10)
+    end
+    it "I see a link to my bulk discounts" do
+      visit dashboard_merchant_path(@merchant_1)
+
+      expect(page).to have_link("My Bulk Discounts")
+
+      visit dashboard_merchant_path(@merchant_2)
+
+      expect(page).to have_link("My Bulk Discounts")
+
+      click_link("My Bulk Discounts")
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+    end
+  end
 end
 
