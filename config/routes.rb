@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   get "/", to: "welcome#index"
-
+  
   namespace :admin do
     resources :merchants
     resources :invoices
     get 'dashboard', to:'dashboard#index'
   end
-
+  
   resources :merchants do
+    resources :bulk_discounts, only: [:index, :show]
     resources :items, controller: 'merchant/items'
     resources :invoices, controller: 'merchant/invoices'
     get 'dashboard', to:'merchant/dashboard#show', on: :member
