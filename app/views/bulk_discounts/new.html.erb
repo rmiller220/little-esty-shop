@@ -1,0 +1,10 @@
+<h1>Create a New Discount</h1>
+<%= form_with model: @bulk_discount, url: { controller: "bulk_discounts", action: "create" }, local: true do |form| %>
+  <%= form.label :name, "Name" %>
+  <%= form.text_field :name %>
+  <%= form.label :percentage_discounts, "Percentage Discounts" %>
+  <%= form.text_field :percentage_discounts %>
+  <%= form.label :quantity_threshold, "Quantity Threshold" %>
+  <%= form.text_field :quantity_threshold %>
+  <%= form.submit "Create Discount" %>
+  <% end %>

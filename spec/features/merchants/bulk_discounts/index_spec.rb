@@ -37,14 +37,20 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
       expect(page).to have_content(@bulk_discount1.name)
       expect(page).to have_content("Percentage off: 10.0%")
       expect(page).to have_content("Quantity Threshold: 10")
-
-      visit merchant_bulk_discounts_path(@merchant_1, @bulk_discount2)
-
-      expect(page).to have_content(@bulk_discount2.name)
-      expect(page).to have_content("Percentage off: 20.0%")
-      expect(page).to have_content("Quantity Threshold: 15")
     end
 
+    it "I see a link to create a new discount" do
+      visit merchant_bulk_discounts_path(@merchant_1)
+
+      expect(page).to have_link("Create New Discount")
+
+      click_link("Create New Discount")
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+    end
+
+    it "I see a form to create a new discount" do
+      
     it "I see a link to delete each discount" do
       visit merchant_bulk_discounts_path(@merchant_1)
 
@@ -59,13 +65,13 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
   end
 end
 
-# 1: Merchant Bulk Discounts Index
+# 2: Merchant Bulk Discount Create
 
 # As a merchant
-# When I visit my merchant dashboard
-# Then I see a link to view all my discounts
+# When I visit my bulk discounts index
+# Then I see a link to create a new discount
 # When I click this link
-# Then I am taken to my bulk discounts index page
-# Where I see all of my bulk discounts including their
-# percentage discount and quantity thresholds
-# And each bulk discount listed includes a link to its show page
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
