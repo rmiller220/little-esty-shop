@@ -48,30 +48,16 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
 
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
     end
-
-    it "I see a form to create a new discount" do
       
     it "I see a link to delete each discount" do
       visit merchant_bulk_discounts_path(@merchant_1)
-
+save_and_open_page
       expect(page).to have_link("Delete Discount")
 
-      click_link("Delete Discount")
+      click_link("Delete Discount #{@bulk_discount1.id}")
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
       expect(page).to_not have_content(@bulk_discount1.name)
-
     end
   end
 end
-
-# 2: Merchant Bulk Discount Create
-
-# As a merchant
-# When I visit my bulk discounts index
-# Then I see a link to create a new discount
-# When I click this link
-# Then I am taken to a new page where I see a form to add a new bulk discount
-# When I fill in the form with valid data
-# Then I am redirected back to the bulk discount index
-# And I see my new bulk discount listed
