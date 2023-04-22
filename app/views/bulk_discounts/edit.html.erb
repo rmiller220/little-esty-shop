@@ -1,0 +1,10 @@
+<h2>Edit <%= @bulk_discount.name %></h2>
+<%= form_with model: @bulk_discount, url: { controller: "bulk_discounts", action: "update" }, local: true do |form| %>
+  <%= form.label :name, "Name" %>
+  <%= form.text_field :name, value: @bulk_discount.name %>
+  <%= form.label :percentage_discounts, "Percentage off:" %>
+  <%= form.text_field :percentage_discounts, value: @bulk_discount.percentage_discounts %>
+  <%= form.label :quantity_threshold, "Quantity Threshold:" %>
+  <%= form.text_field :quantity_threshold, value: @bulk_discount.quantity_threshold %>
+  <%= form.submit "Update Discount" %>
+  <% end %>
