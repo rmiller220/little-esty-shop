@@ -13,5 +13,7 @@ class Merchant::InvoicesController < ApplicationController
     @app_logo = PhotoBuilder.app_photo_info
     @title_string = "#{@merchant.name}"
     @total_discounted_revenue = @invoice.total_discounted_revenue
+    # require 'pry'; binding.pry
+    @discount = @merchant.bulk_discounts
   end
 end

@@ -20,12 +20,18 @@
   <table style="border:1px solid black;" id="items_table">
     <tr>
       <th>Item Name</th>
+      <th>Bulk Discount (if any)</th>
       <th>Item Quantity</th>
       <th>Item Price</th>
       <th>Item Status</th>
     </tr>
     <% @invoice_items.each_with_index do |item, index| %>
       <td style="display:flex; margin-left: 9px" ><%= item.item_name %></td>
+      <td><% if item.discount_applied == nil %>
+        No Discount
+        <% else %>
+        <%= link_to "#{item.discount_applied.percentage}", merchant_bulk_discount_path(@merchant, item.discount_applied.id) %>
+        <% end %>
       <td><%= item.quantity %></td>
       <td><%= item.unit_price %></td>
       <td>

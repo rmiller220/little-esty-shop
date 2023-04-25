@@ -118,20 +118,8 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(@invoice_item_21.status).to eq('pending')
       expect(current_path).to eq(merchant_invoice_path(@merchant_1, @invoice_1))
     end
+    #story 6
     
-    it 'I see the total revenue for this invoice, without the discounts' do
-      visit merchant_invoice_path(@merchant_1, @invoice_1)
-
-      within "#invoice_info" do
-        expect(page).to have_content(@invoice_1.total_revenue)
-      end
-
-      visit merchant_invoice_path(@merchant_2, @invoice_7)
-
-      within "#invoice_info" do
-        expect(page).to have_content(@invoice_7.total_revenue)
-      end
-    end
     describe 'user story 6' do
       before(:each) do
         @merchant_1 = Merchant.create!(name: "Schroeder-Jerde")
@@ -169,6 +157,19 @@ RSpec.describe 'Merchant Invoice Show Page' do
         @transaction_6 = @invoice_6.transactions.create!(credit_card_number: 879799, result: 1)
     
       end
+        it 'I see the total revenue for this invoice, without the discounts' do
+          visit merchant_invoice_path(@merchant_1, @invoice_1)
+    
+          within "#invoice_info" do
+            expect(page).to have_content(@invoice_1.total_revenue)
+          end
+    
+          visit merchant_invoice_path(@merchant_2, @invoice_5)
+    
+          within "#invoice_info" do
+            expect(page).to have_content(@invoice_5.total_revenue)
+        end
+      end
         it 'I see the total discounted revenue for this invoice, which 
         includes bulk discounts in the calculation' do
           visit merchant_invoice_path(@merchant_1, @invoice_1)
@@ -183,9 +184,33 @@ RSpec.describe 'Merchant Invoice Show Page' do
         expect(page).to have_content("Total Discounted Revenue: #{@invoice_5.total_discounted_revenue}")
         end
       end
+
+      it 'I see a link to the show page for the bulk discount that was applied (if any)' do
+        visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+        expect(page).to have_link(@bulk_discount1.percentage_discounts * 100)
+
+        click_link(@bulk_discount1.percentage_discounts * 100)
+
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1, @bulk_discount1))
+        
+        visit merchant_invoice_path(@merchant_2, @invoice_5)
+
+        expect(page).to have_link(@bulk_discount4.percentage_discounts * 100)
+
+        click_link(@bulk_discount4.percentage_discounts * 100)
+
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant_2, @bulk_discount4))
+      end
     end
   end
 end
+
+# 7: Merchant Invoice Show Page: Link to applied discounts
+
+# As a merchant
+# When I visit my merchant invoice show page
+# Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
 
 # 6: Merchant Invoice Show Page: Total Revenue and Discounted Revenue
 

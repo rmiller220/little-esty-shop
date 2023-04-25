@@ -5,10 +5,13 @@ class Admin::InvoicesController < ApplicationController
   end
 
   def show
+   
+    @merchant = Merchant.find(params[:merchant_id])
     @invoice = Invoice.find(params[:id])
     @items = @invoice.items
     @invoice_items = @invoice.invoice_items
     @app_logo = PhotoBuilder.app_photo_info
+    @discount = @merchant.bulk_discounts.find(params[:id])
   end
 
   def update
