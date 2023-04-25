@@ -1,8 +1,8 @@
 <h1>Bulk Index Page</h1>
 <h4>Upcoming Holidays</h4>
-<%= "#{@holidays.date1} -- #{@holidays.name1}" %><br>
-<%= "#{@holidays.date2} -- #{@holidays.name2}" %><br>
-<%= "#{@holidays.date3} -- #{@holidays.name3}" %><br>
+<%= "#{@holidays.name1} on #{@holidays.date1}" %><br>
+<%= "#{@holidays.name2} on #{@holidays.date2}" %><br>
+<%= "#{@holidays.name3} on #{@holidays.date3}" %><br>
 
 <% @bulk_discount.each do |discount| %>
 <div id="bulk discount-<%=discount.id%>" >
