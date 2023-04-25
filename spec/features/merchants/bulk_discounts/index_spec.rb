@@ -39,6 +39,8 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
       .to_return(status: 200, body: File.read('./spec/fixtures/merchant.json'))
     stub_request(:get, "https://api.unsplash.com/photos/5Fxuo7x-eyg?client_id=aOXB56mTdUD88zHCvISJODxwbTPyRRsOk0rA8Ha-cbc")
       .to_return(status: 200, body: File.read('./spec/fixtures/app_logo.json'))
+    stub_request(:get, "https://date.nager.at/api/v3/NextPublicHolidays/US")
+      .to_return(status: 200, body: File.read('./spec/fixtures/holidays.json'))
   end
   describe 'Visit Bulk Discounts Index Page' do
     it "I see a link to all my discounts" do
@@ -131,9 +133,27 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
 
       expect(page).to have_content("Please fill out information fields properly")
     end
+
+    it 'I see a section with a header of "Upcoming Holidays"' do
+      @holidays = HolidayBuilder.holidays
+      visit merchant_bulk_discounts_path(@merchant_1)
+
+      expect(page).to have_content("Upcoming Holidays")
+      expect(page).to have_content("#{@holidays.name1} on #{@holidays.date1}")
+      expect(page).to have_content("#{@holidays.name2} on #{@holidays.date2}")
+      expect(page).to have_content("#{@holidays.name3} on #{@holidays.date3}")
+    end
   end
 end
 
+# 9: Holidays API
+
+# As a merchant
+# When I visit the discounts index page
+# I see a section with a header of "Upcoming Holidays"
+# In this section the name and date of the next 3 upcoming US holidays are listed.
+
+# Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
 
 # 5: Merchant Bulk Discount Edit
 

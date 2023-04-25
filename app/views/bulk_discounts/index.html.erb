@@ -1,4 +1,9 @@
 <h1>Bulk Index Page</h1>
+<h4>Upcoming Holidays</h4>
+<%= "#{@holidays.name1} on #{@holidays.date1}" %><br>
+<%= "#{@holidays.name2} on #{@holidays.date2}" %><br>
+<%= "#{@holidays.name3} on #{@holidays.date3}" %><br>
+
 <% @bulk_discount.each do |discount| %>
 <div id="bulk discount-<%=discount.id%>" >
 <p><%= link_to discount.name, merchant_bulk_discount_path(@merchant, discount) %></p>
