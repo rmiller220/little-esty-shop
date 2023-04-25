@@ -63,11 +63,12 @@ describe'::incomplete_invoices' do
     @invoice_5 = @customer_2.invoices.create!(status: 1)
     @invoice_6 = @customer_2.invoices.create!(status: 1)
     @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 100, status: 1)
-    @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 15, unit_price: 200, status: 1)
+    @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 15, unit_price: 200, status: 1)
     @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 2, unit_price: 300, status: 1)
     @invoice_item_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_4.id, quantity: 20, unit_price: 400, status: 1)
     @invoice_item_5 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_5.id, quantity: 10, unit_price: 500, status: 1)
     @invoice_item_6 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_6.id, quantity: 5, unit_price: 600, status: 1)
+    @invoice_item_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_5.id, quantity: 20, unit_price: 500, status: 1)
     @transaction_1 = @invoice_1.transactions.create!(credit_card_number: 203942, result: 1)
     @transaction_2 = @invoice_2.transactions.create!(credit_card_number: 230948, result: 1)
     @transaction_3 = @invoice_3.transactions.create!(credit_card_number: 234092, result: 1)
@@ -80,21 +81,21 @@ describe'::incomplete_invoices' do
   #  make invoice_item_2 be associated with invoice_1, then add numbers
   # from invoice_2 to invoice_1
     it 'total_bulk_discount' do
-      expect(@invoice_1.total_bulk_discount).to eq(1.0)
-      expect(@invoice_2.total_bulk_discount).to eq(6.0)
+      expect(@invoice_1.total_bulk_discount).to eq(7.0)
+      # expect(@invoice_2.total_bulk_discount).to eq(6.0)
       expect(@invoice_3.total_bulk_discount).to eq(0.0)
       expect(@invoice_4.total_bulk_discount).to eq(16.0)
       expect(@invoice_5.total_bulk_discount).to eq(7.5)
-      expect(@invoice_6.total_bulk_discount).to eq(0.0)
+      expect(@invoice_6.total_bulk_discount).to eq(30.0)
     end
 
     it 'total_discounted_revenue' do
-      expect(@invoice_1.total_discounted_revenue).to eq(9.0)
-      expect(@invoice_2.total_discounted_revenue).to eq(24.0)
+      expect(@invoice_1.total_discounted_revenue).to eq(33.0)
+      # expect(@invoice_2.total_discounted_revenue).to eq(24.0)
       expect(@invoice_3.total_discounted_revenue).to eq(6.0)
       expect(@invoice_4.total_discounted_revenue).to eq(64.0)
       expect(@invoice_5.total_discounted_revenue).to eq(42.5)
-      expect(@invoice_6.total_discounted_revenue).to eq(30.0)
+      expect(@invoice_6.total_discounted_revenue).to eq(100.0)
     end
   end
 end

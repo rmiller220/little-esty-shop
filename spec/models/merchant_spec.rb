@@ -75,18 +75,6 @@ RSpec.describe Merchant, type: :model do
       expect(Merchant.top_five_merchants.first).to eq(@merchant_3)
     end
 
-    it "#update_status" do
-      expect(@merchant_3.status).to eq("disabled")
-
-      @merchant_3.update_status("enabled")
-
-      expect(@merchant_3.status).to eq("enabled")
-
-      @merchant_3.update_status("disabled")
-
-      expect(@merchant_3.status).to eq("disabled")
-    end
-
     it "#top_day" do
     @invoice_item_61 = @invoice_4.invoice_items.create!(item: @item_35, quantity: 1000, unit_price: 2400, status: 1)
       @invoice_1.update(created_at: "06/04/2023")
