@@ -16,4 +16,11 @@ class InvoiceItem < ApplicationRecord
   def price_usd
     unit_price / 100.0
   end
+
+  def discount_applied
+    bulk_discounts
+    .where("quantity_threshold <= ?", quantity)
+    .order(:percentage_discounts)
+    .last
+  end
 end
