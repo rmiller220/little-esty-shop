@@ -35,13 +35,7 @@ class Merchant < ApplicationRecord
           .group("merchants.id")
           .select('merchants.*, SUM(invoice_items.unit_price * invoice_items.quantity) as total_revenue')
           .order('total_revenue DESC')
-          .limit(5)
-          
-  end
-
-  def update_status(status_update)
-    update(status: status_update)
-    save   
+          .limit(5)   
   end
 
   def top_day
@@ -52,7 +46,6 @@ class Merchant < ApplicationRecord
             .order('total_revenue DESC')
             .first.created_at
             .strftime("%m/%d/%Y")
-    
   end
 
   def revenue_usd

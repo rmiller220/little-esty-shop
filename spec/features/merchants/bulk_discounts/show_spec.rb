@@ -12,6 +12,8 @@ RSpec.describe 'Merchant Bulk Discount Show Page' do
       .to_return(status: 200, body: File.read('./spec/fixtures/merchant.json'))
     stub_request(:get, "https://api.unsplash.com/photos/5Fxuo7x-eyg?client_id=aOXB56mTdUD88zHCvISJODxwbTPyRRsOk0rA8Ha-cbc")
       .to_return(status: 200, body: File.read('./spec/fixtures/app_logo.json'))
+    stub_request(:get, "https://date.nager.at/api/v3/NextPublicHolidays/US")
+      .to_return(status: 200, body: File.read('./spec/fixtures/holidays.json'))
   end
   
   describe 'Visit Bulk Discount Show Page' do
