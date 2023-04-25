@@ -12,5 +12,6 @@ class Merchant::InvoicesController < ApplicationController
     @invoice_items = @merchant.invoice_items
     @app_logo = PhotoBuilder.app_photo_info
     @title_string = "#{@merchant.name}"
+    @total_discounted_revenue = @invoice.total_discounted_revenue
   end
 end

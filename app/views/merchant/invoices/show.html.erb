@@ -10,6 +10,7 @@
     <li> Invoice Creation Date: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %> </li>
     <li> Customer Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %> </li>
     <li> Total Potential Revenue: <%= @invoice.total_revenue %> </li>
+    <li> Total Discounted Revenue: <%= @total_discounted_revenue %> </li>
   </ul>
 </section>
 <div class = "invoice_table">
