@@ -161,27 +161,27 @@ RSpec.describe 'Merchant Invoice Show Page' do
           visit merchant_invoice_path(@merchant_1, @invoice_1)
     
           within "#invoice_info" do
-            expect(page).to have_content(@invoice_1.total_revenue)
+            expect(page).to have_content("$#{@invoice_1.total_revenue}")
           end
     
           visit merchant_invoice_path(@merchant_2, @invoice_5)
     
           within "#invoice_info" do
-            expect(page).to have_content(@invoice_5.total_revenue)
+            expect(page).to have_content("$#{@invoice_5.total_revenue}")
         end
       end
         it 'I see the total discounted revenue for this invoice, which 
         includes bulk discounts in the calculation' do
           visit merchant_invoice_path(@merchant_1, @invoice_1)
-          save_and_open_page
+
           within "#invoice_info" do
-          expect(page).to have_content("Total Discounted Revenue: #{@invoice_1.total_discounted_revenue}")
+          expect(page).to have_content("Total Discounted Revenue: $#{@invoice_1.total_discounted_revenue}")
         end
         
         visit merchant_invoice_path(@merchant_2, @invoice_5)
         
         within "#invoice_info" do
-        expect(page).to have_content("Total Discounted Revenue: #{@invoice_5.total_discounted_revenue}")
+        expect(page).to have_content("Total Discounted Revenue: $#{@invoice_5.total_discounted_revenue}")
         end
       end
 

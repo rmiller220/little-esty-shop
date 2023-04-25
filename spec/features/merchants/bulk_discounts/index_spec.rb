@@ -56,7 +56,7 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
 
     it "I click link to show page" do
       visit merchant_bulk_discounts_path(@merchant_1)
-      save_and_open_page
+
       click_link(@bulk_discount1.name)
 
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1, @bulk_discount1))
